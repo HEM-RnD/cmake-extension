@@ -149,6 +149,9 @@ function(conan_cmake_settings result)
             else()
                 message(FATAL_ERROR "Conan: Unknown architecture, no CMAKE_SYSTEM_PROCESSOR variable set")
             endif()
+            if (ARM_CPU)
+                set(_CONAN_SETTING_ARCH_CPU ${ARM_CPU})
+            endif()
         endif()
     elseif (${CMAKE_${LANGUAGE}_COMPILER_ID} STREQUAL AppleClang)
         # using AppleClang
@@ -235,7 +238,7 @@ function(conan_cmake_settings result)
     endforeach()
 
     if(NOT _SETTINGS OR ARGUMENTS_PROFILE_AUTO STREQUAL "ALL")
-        set(ARGUMENTS_PROFILE_AUTO arch build_type compiler compiler.version
+        set(ARGUMENTS_PROFILE_AUTO arch arch.cpu build_type compiler compiler.version
                                    compiler.runtime compiler.libcxx compiler.toolset 
                                    os)
     endif()
